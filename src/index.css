@@ -5,9 +5,41 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas: "header header header"
+                       "nav nav nav"
+                       "main main main"
+                       "footer footer footer";
+  min-height: 100vh;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Apply grid areas to components */
+header {
+  grid-area: header;
+  background-color: #f0f0f0;
+  padding: 1rem;
+}
+
+nav {
+  grid-area: nav;
+  background-color: #e0e0e0;
+  padding: 0.5rem;
+}
+
+main {
+  grid-area: main;
+  padding: 1rem;
+}
+
+footer {
+  grid-area: footer;
+  background-color: #d0d0d0;
+  padding: 1rem;
 }
