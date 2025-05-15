@@ -1,14 +1,15 @@
+import { Link } from 'react-router-dom';
+
 function Nav() {
     return (
       <nav>
+        <img src="/images/little_lemon_logo.png" alt="Logo" class="nav-img" />
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/menu">Menu</a></li>
-            <li><a href="/reservation">Reservation</a></li>
-            <li><a href="/about">About</a></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/booking">Book a table</Link></li>
         </ul>
       </nav>
     );
   }
-  
+
   export default Nav;
