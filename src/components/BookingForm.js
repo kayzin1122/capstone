@@ -1,4 +1,4 @@
-import { submitAPI } from './src/utils/apiFunctions';
+import { submitAPI } from '../utils/apiFunctions';
 
 function BookingForm({ date, setDate, time, setTime, guests, setGuests, occasion, setOccasion, availableTimes, dispatch }) {
     const handleSubmit = (e) => {
@@ -23,7 +23,7 @@ function BookingForm({ date, setDate, time, setTime, guests, setGuests, occasion
     };
 
     return (
-        <form style={{ display: "grid", maxWidth: "200px", gap: "20px" }}>
+        <form style={{ display: "grid", maxWidth: "200px", gap: "20px" }} onSubmit={handleSubmit}>
             <label htmlFor="res-date">Choose date</label>
             <input type="date" id="res-date" value={date} onChange= {(e) => {
                 setDate(e.target.value);

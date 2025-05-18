@@ -1,7 +1,7 @@
 import BookingForm from "./BookingForm";
 import Nav from './Nav';
 import {useReducer, useState} from "react";
-import { fetchAPI} from './src/utils/apiFunctions';
+import { fetchAPI } from '../utils/apiFunctions';
 
 
 function BookingPage() {
