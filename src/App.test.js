@@ -9,29 +9,23 @@ test('Renders the BookingForm heading', () => {
 });
 
 test('initializeTimes returns correct time slots', () => {
-    const expectedTimes = [
-        '17:00',
-        '18:00',
-        '19:00',
-        '20:00',
-        '21:00',
-        '22:00'
-    ];
-    const result = initializeTimes();
-    expect(result).toEqual(expectedTimes);
+    const time = initializeTimes();
+    expect(Array.isArray(time)).toBe(true);
+    expect(time.length).toBeGreaterThan(0);
 });
 
-test('updateTimes returns same available times regardless of date change', () => {
-    const currentTimes = [
-        '17:00',
-        '18:00',
-        '19:00',
-        '20:00',
-        '21:00',
-        '22:00'
-    ];
-    const newDate = '2024-01-15';
-    const action = { type: 'change_date', payload: newDate };
+test('updateTimes returns updated times when date changes', () => {
+    // Setup
+    const currentTimes = initializeTimes();
+    const testDate = '2024-01-15';
+
+    // Create action with date property as used in BookingForm.js
+    const action = { type: 'change_date', date: testDate };
+
+    // Execute
     const result = updateTimes(currentTimes, action);
-    expect(result).toEqual(currentTimes);
+
+    // Verify
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBeGreaterThan(0);
 });

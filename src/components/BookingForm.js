@@ -1,29 +1,6 @@
-import { submitAPI } from '../utils/apiFunctions';
-
-function BookingForm({ date, setDate, time, setTime, guests, setGuests, occasion, setOccasion, availableTimes, dispatch }) {
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const formData = {
-            date,
-            time,
-            guests,
-            occasion
-        };
-        // Submit form data to the API
-        const success = submitAPI(formData);
-        if (success) {
-            // Form submission was successful
-            alert('Booking confirmed!');
-            // Reset form fields
-            setDate('');
-            setTime('');
-            setGuests('');
-            setOccasion('');
-        }
-    };
-
+function BookingForm({ date, setDate, time, setTime, guests, setGuests, occasion, setOccasion, availableTimes, dispatch, submitForm }) {
     return (
-        <form style={{ display: "grid", maxWidth: "200px", gap: "20px" }} onSubmit={handleSubmit}>
+        <form style={{ display: "grid", maxWidth: "200px", gap: "20px" }} onSubmit={submitForm}>
             <label htmlFor="res-date">Choose date</label>
             <input type="date" id="res-date" value={date} onChange= {(e) => {
                 setDate(e.target.value);
