@@ -7,7 +7,7 @@ function CallToAction() {
       <h1>Little Lemon</h1>
       <Chicago />
       <Link to="/booking">
-        <button class="button">Reserve a Table</button>
+        <button className="button">Reserve a Table</button>
       </Link>
     </section>
   );

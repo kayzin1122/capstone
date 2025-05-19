@@ -3,7 +3,7 @@ function CustomersSay() {
         <section>
             <h2>What our customers say</h2>
             <p>We have a lot of satisfied customers, here are some of their testimonials:</p>
-            <ul>
+            <ul aria-label="Unordered list of customer feedback">
                 <li>
                     <p>"The 'Chef's Mystery Creation' was a delightful surprise! Incredibly flavorful and unique. Highly recommend trying it!"</p>
                     <p>- Sarah M.</p>
