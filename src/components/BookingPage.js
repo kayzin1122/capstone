@@ -1,5 +1,6 @@
 import BookingForm from "./BookingForm";
 import Nav from './Nav';
+import Footer from './Footer';
 import {useReducer, useState} from "react";
 import { fetchAPI, submitAPI } from '../utils/apiFunctions';
 import { useNavigate } from 'react-router-dom';
@@ -31,19 +32,17 @@ function BookingPage() {
 
     // Function to accepts form data
     function submitForm(formData) {
-        // Send form data to server
-        if (submitAPI(formData)) {
-            // Redirect to confirmation page
-            navigate('/confirmed_booking');
-        }
+    // Send form data to server
+    if (submitAPI(formData)) {
+        // Redirect to confirmation page
+        navigate('/confirmed_booking');
     }
-
+}
 
     return (
         <>
             <Nav />
             <main>
-                <h1>Booking Page</h1>
                 <BookingForm
                     date={date}
                     setDate={setDate}
@@ -58,6 +57,7 @@ function BookingPage() {
                     submitForm={submitForm}
                 />
             </main>
+            <Footer />
         </>
     );
 }
