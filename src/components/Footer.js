@@ -1,12 +1,12 @@
 function Footer() {
     return (
       <footer>
-          <div>
+          <section>
               <img src="/images/logo.png" alt="little lemon logo" />
-          </div>
-          <div>
+          </section>
+          <section>
               <p>Copyright Little Lemon</p>
-          </div>
+          </section>
       </footer>
 
     );

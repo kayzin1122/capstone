@@ -11,6 +11,7 @@ function BookingForm({ date, setDate, time, setTime, guests, setGuests, occasion
                 type="date" 
                 id="res-date" 
                 className="booking-input"
+                aria-label="Choose a date"
                 value={date} 
                 onChange= {(e) => {
                     setDate(e.target.value);
@@ -23,6 +24,7 @@ function BookingForm({ date, setDate, time, setTime, guests, setGuests, occasion
                 required 
                 id="res-time" 
                 className="booking-select"
+                 aria-label="Choose a time"
                 value={time} 
                 onChange= {(e) => setTime(e.target.value)}
             >
@@ -41,6 +43,7 @@ function BookingForm({ date, setDate, time, setTime, guests, setGuests, occasion
                 max="10" 
                 id="guests" 
                 className="booking-input"
+                 aria-label="Enter number of guests"
                 value={guests} 
                 onChange= {(e) => setGuests(e.target.value)} 
             />
@@ -50,6 +53,7 @@ function BookingForm({ date, setDate, time, setTime, guests, setGuests, occasion
                 required 
                 id="occasion" 
                 className="booking-select"
+                 aria-label="Choose an occasion"
                 value={occasion} 
                 onChange= {(e) => setOccasion(e.target.value)}
             >
@@ -58,7 +62,7 @@ function BookingForm({ date, setDate, time, setTime, guests, setGuests, occasion
                 <option>Anniversary</option>
             </select>
 
-            <input type="submit" className="booking-submit" value="Make Your reservation" />
+            <input type="submit" className="booking-submit" value="Make Your reservation"  aria-label="Button to submit form"/>
         </form>
     );
 }
