@@ -1,6 +1,31 @@
+import { useState, useEffect } from 'react';
+
 function BookingForm({ date, setDate, time, setTime, guests, setGuests, occasion, setOccasion, availableTimes, dispatch, submitForm }) {
+    // State to track form validity
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    // Update form validity whenever any field changes
+    useEffect(() => {
+        const isValidDate = date.trim() !== '';
+        const isValidTime = time.trim() !== '';
+        const isValidGuests = Number(guests) >= 1 && Number(guests) <= 10;
+        const isValidOccasion = occasion.trim() !== '';
+
+        setIsFormValid(isValidDate && isValidTime && isValidGuests && isValidOccasion);
+    }, [date, time, guests, occasion]);
+
     return (
-        <form className="booking-form" onSubmit={submitForm}>
+        <form className="booking-form" onSubmit={(e) => {
+            e.preventDefault();
+            if (isFormValid) {
+                submitForm({
+                    date,
+                    time,
+                    guests,
+                    occasion
+                });
+            }
+        }}>
             <div className="booking-section">
                 <h1 style={{ marginBottom: "5px", textAlign: "center" }}>Booking Page</h1>
             </div>
@@ -62,7 +87,13 @@ function BookingForm({ date, setDate, time, setTime, guests, setGuests, occasion
                 <option>Anniversary</option>
             </select>
 
-            <input type="submit" className="booking-submit" value="Make Your reservation"  aria-label="Button to submit form"/>
+            <input 
+                type="submit" 
+                className="booking-submit" 
+                value="Make Your reservation"  
+                aria-label="Button to submit form"
+                disabled={!isFormValid}
+            />
         </form>
     );
 }
