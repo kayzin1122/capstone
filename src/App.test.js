@@ -31,7 +31,7 @@ test('updateTimes returns updated times when date changes', () => {
     expect(result.length).toBeGreaterThan(0);
 });
 
-// Step 1: HTML5 Validation Tests
+// HTML5 Validation Tests
 test('Date input has required attribute and correct type', () => {
     render(<BookingForm availableTimes={["17:00", "18:00"]} />);
     const dateInput = screen.getByLabelText(/choose date/i);
@@ -64,4 +64,212 @@ test('Occasion select has required attribute', () => {
     expect(occasionSelect).toHaveAttribute('required');
 });
 
-// Step 2: JavaScript Validation Tests
+// JavaScript Validation Tests
+test('Submit button is disabled when form is invalid', () => {
+    render(<BookingForm 
+        date="" 
+        time="" 
+        guests="" 
+        occasion="" 
+        availableTimes={["17:00", "18:00"]} 
+        setDate={() => {}} 
+        setTime={() => {}} 
+        setGuests={() => {}} 
+        setOccasion={() => {}} 
+        dispatch={() => {}} 
+        submitForm={() => {}} 
+    />);
+    
+    const submitButton = screen.getByRole('button', { name: /make your reservation/i });
+    expect(submitButton).toBeDisabled();
+});
+
+test('Submit button is enabled when all form fields are valid', () => {
+    render(<BookingForm 
+        date="2024-01-15" 
+        time="17:00" 
+        guests="2" 
+        occasion="Birthday" 
+        availableTimes={["17:00", "18:00"]} 
+        setDate={() => {}} 
+        setTime={() => {}} 
+        setGuests={() => {}} 
+        setOccasion={() => {}} 
+        dispatch={() => {}} 
+        submitForm={() => {}} 
+    />);
+    
+    const submitButton = screen.getByRole('button', { name: /make your reservation/i });
+    expect(submitButton).not.toBeDisabled();
+});
+
+test('Form validation updates when fields change', () => {
+    const setDate = jest.fn();
+    const setTime = jest.fn();
+    const setGuests = jest.fn();
+    const setOccasion = jest.fn();
+    const dispatch = jest.fn();
+    
+    const { rerender } = render(<BookingForm 
+        date="" 
+        time="" 
+        guests="" 
+        occasion="" 
+        availableTimes={["17:00", "18:00"]} 
+        setDate={setDate} 
+        setTime={setTime} 
+        setGuests={setGuests} 
+        setOccasion={setOccasion} 
+        dispatch={dispatch} 
+        submitForm={() => {}} 
+    />);
+    
+    // Initially button should be disabled
+    let submitButton = screen.getByRole('button', { name: /make your reservation/i });
+    expect(submitButton).toBeDisabled();
+    
+    // Update form with valid values
+    rerender(<BookingForm 
+        date="2024-01-15" 
+        time="17:00" 
+        guests="2" 
+        occasion="Birthday" 
+        availableTimes={["17:00", "18:00"]} 
+        setDate={setDate} 
+        setTime={setTime} 
+        setGuests={setGuests} 
+        setOccasion={setOccasion} 
+        dispatch={dispatch} 
+        submitForm={() => {}} 
+    />);
+    
+    // Now button should be enabled
+    submitButton = screen.getByRole('button', { name: /make your reservation/i });
+    expect(submitButton).not.toBeDisabled();
+});
+
+test('Form submission calls submitForm with correct data', () => {
+    const submitForm = jest.fn();
+    
+    render(<BookingForm 
+        date="2024-01-15" 
+        time="17:00" 
+        guests="2" 
+        occasion="Birthday" 
+        availableTimes={["17:00", "18:00"]} 
+        setDate={() => {}} 
+        setTime={() => {}} 
+        setGuests={() => {}} 
+        setOccasion={() => {}} 
+        dispatch={() => {}} 
+        submitForm={submitForm} 
+    />);
+    
+    const submitButton = screen.getByRole('button', { name: /make your reservation/i });
+    fireEvent.click(submitButton);
+    
+    expect(submitForm).toHaveBeenCalledWith({
+        date: "2024-01-15",
+        time: "17:00",
+        guests: "2",
+        occasion: "Birthday"
+    });
+});
+
+test('Form does not submit when invalid', () => {
+    const submitForm = jest.fn();
+    
+    render(<BookingForm 
+        date="" 
+        time="17:00" 
+        guests="2" 
+        occasion="Birthday" 
+        availableTimes={["17:00", "18:00"]} 
+        setDate={() => {}} 
+        setTime={() => {}} 
+        setGuests={() => {}} 
+        setOccasion={() => {}} 
+        dispatch={() => {}} 
+        submitForm={submitForm} 
+    />);
+    
+    const submitButton = screen.getByRole('button', { name: /make your reservation/i });
+    fireEvent.click(submitButton);
+    
+    expect(submitForm).not.toHaveBeenCalled();
+});
+
+test('Individual field validation works correctly', () => {
+    // Test with only date missing
+    const { rerender } = render(<BookingForm 
+        date="" 
+        time="17:00" 
+        guests="2" 
+        occasion="Birthday" 
+        availableTimes={["17:00", "18:00"]} 
+        setDate={() => {}} 
+        setTime={() => {}} 
+        setGuests={() => {}} 
+        setOccasion={() => {}} 
+        dispatch={() => {}} 
+        submitForm={() => {}} 
+    />);
+    
+    let submitButton = screen.getByRole('button', { name: /make your reservation/i });
+    expect(submitButton).toBeDisabled();
+    
+    // Test with only time missing
+    rerender(<BookingForm 
+        date="2024-01-15" 
+        time="" 
+        guests="2" 
+        occasion="Birthday" 
+        availableTimes={["17:00", "18:00"]} 
+        setDate={() => {}} 
+        setTime={() => {}} 
+        setGuests={() => {}} 
+        setOccasion={() => {}} 
+        dispatch={() => {}} 
+        submitForm={() => {}} 
+    />);
+    
+    submitButton = screen.getByRole('button', { name: /make your reservation/i });
+    expect(submitButton).toBeDisabled();
+    
+    // Test with invalid guests number
+    rerender(<BookingForm 
+        date="2024-01-15" 
+        time="17:00" 
+        guests="0" 
+        occasion="Birthday" 
+        availableTimes={["17:00", "18:00"]} 
+        setDate={() => {}} 
+        setTime={() => {}} 
+        setGuests={() => {}} 
+        setOccasion={() => {}} 
+        dispatch={() => {}} 
+        submitForm={() => {}} 
+    />);
+    
+    submitButton = screen.getByRole('button', { name: /make your reservation/i });
+    expect(submitButton).toBeDisabled();
+    
+    // Test with only occasion missing
+    rerender(<BookingForm 
+        date="2024-01-15" 
+        time="17:00" 
+        guests="2" 
+        occasion="" 
+        availableTimes={["17:00", "18:00"]} 
+        setDate={() => {}} 
+        setTime={() => {}} 
+        setGuests={() => {}} 
+        setOccasion={() => {}} 
+        dispatch={() => {}} 
+        submitForm={() => {}} 
+    />);
+    
+    submitButton = screen.getByRole('button', { name: /make your reservation/i });
+    expect(submitButton).toBeDisabled();
+});
+
